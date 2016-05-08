@@ -5,20 +5,24 @@ import java.util.List;
 public class Artist {
 	
 	protected List<String> genres;	
-	protected String id;	
+	protected String remoteId;
 	protected String name;	
 	protected Integer popularity;
 
 	public List<String> getGenres() {
 		return genres;
-	}	
-
-	public String getId() {
-		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setGenres(List<String> genres) {
+		this.genres = genres;
+	}
+
+	public String getRemoteId() {
+		return remoteId;
+	}
+
+	public void setRemoteId(String remoteId) {
+		this.remoteId = remoteId;
 	}
 
 	public String getName() {
@@ -39,7 +43,7 @@ public class Artist {
 
 	@Override
 	public String toString() {
-		return "Artist [genres=" + genres + ", id=" + id + ", name=" + name
+		return "Artist [genres=" + genres + ", id=" + remoteId + ", name=" + name
 				+ ", popularity=" + popularity + "]";
 	}
 

@@ -14,50 +14,83 @@ import android.widget.Button;
 import java.io.IOException;
 
 public class RecommendationResultActivity extends Activity {
-    private Button btn;
+
     private static final String TAG = RecommendationResultActivity.class.getCanonicalName();
-    /**
-     * help to toggle between play and pause.
-     */
-    private boolean playing = false;
-    private MediaPlayer mediaPlayer;
-    /**
-     * remain false till media is not completed, inside OnCompletionListener make it true.
-     */
-    private boolean intialStage = true;
+
+    private Button btnPlayRecommended;
+    private boolean playingRecommended = false;
+    private MediaPlayer mediaPlayerRecommended;
+    private boolean intialStageRecommended = true;
+
+    private Button btnPlayRequested;
+    private boolean playingRequested = false;
+    private MediaPlayer mediaPlayerRequested;
+    private boolean intialStageRequested = true;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendation_result);
-        btn = (Button) findViewById(R.id.buttonPreview);
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        btn.setBackgroundResource(R.drawable.button_play);
-        btn.setOnClickListener(pausePlay);
+
+        btnPlayRecommended = (Button) findViewById(R.id.buttonPreviewRecommended);
+        mediaPlayerRecommended = new MediaPlayer();
+        mediaPlayerRecommended.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        btnPlayRecommended.setBackgroundResource(R.drawable.button_play);
+        btnPlayRecommended.setOnClickListener(pausePlayRecommended);
+
+        btnPlayRequested = (Button) findViewById(R.id.buttonPreviewRequested);
+        mediaPlayerRequested = new MediaPlayer();
+        mediaPlayerRequested.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        btnPlayRequested.setBackgroundResource(R.drawable.button_play);
+        btnPlayRequested.setOnClickListener(pausePlayRequested);
+
+
 
     }
 
-    private OnClickListener pausePlay = new OnClickListener() {
+    private OnClickListener pausePlayRecommended = new OnClickListener() {
 
         @Override
         public void onClick(View v) {
-            if (!playing) {
-                btn.setBackgroundResource(R.drawable.button_pause);
-                if (intialStage)
-                    new Player()
-                            .execute(MainActivity.searchedTrack.getPreviewUrl());
+            if (!playingRecommended) {
+                btnPlayRecommended.setBackgroundResource(R.drawable.button_pause);
+                if (intialStageRecommended)
+                    new PlayerRecommended()
+                            .execute(MainActivity.recommendation.getSuggested_song().getPreviewUrl());
                 else {
-                    if (!mediaPlayer.isPlaying())
-                        mediaPlayer.start();
+                    if (!mediaPlayerRecommended.isPlaying())
+                        mediaPlayerRecommended.start();
                 }
-                playing = true;
+                playingRecommended = true;
             } else {
-                btn.setBackgroundResource(R.drawable.button_play);
-                if (mediaPlayer.isPlaying())
-                    mediaPlayer.pause();
-                playing = false;
+                btnPlayRecommended.setBackgroundResource(R.drawable.button_play);
+                if (mediaPlayerRecommended.isPlaying())
+                    mediaPlayerRecommended.pause();
+                playingRecommended = false;
+            }
+        }
+    };
+
+    private OnClickListener pausePlayRequested = new OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            if (!playingRequested) {
+                btnPlayRequested.setBackgroundResource(R.drawable.button_pause);
+                if (intialStageRequested)
+                    new PlayerRequested()
+                            .execute(MainActivity.recommendation.getRequest_song().getPreviewUrl());
+                else {
+                    if (!mediaPlayerRequested.isPlaying())
+                        mediaPlayerRequested.start();
+                }
+                playingRequested = true;
+            } else {
+                btnPlayRequested.setBackgroundResource(R.drawable.button_play);
+                if (mediaPlayerRequested.isPlaying())
+                    mediaPlayerRequested.pause();
+                playingRequested = false;
             }
         }
     };
@@ -68,7 +101,7 @@ public class RecommendationResultActivity extends Activity {
      * @author piyush
      */
 
-    class Player extends AsyncTask<String, Void, Boolean> {
+    class PlayerRecommended extends AsyncTask<String, Void, Boolean> {
         private ProgressDialog progress;
 
         @Override
@@ -76,20 +109,20 @@ public class RecommendationResultActivity extends Activity {
             Boolean prepared;
             try {
 
-                mediaPlayer.setDataSource(params[0]);
+                mediaPlayerRecommended.setDataSource(params[0]);
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                mediaPlayerRecommended.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        intialStage = true;
-                        playing = false;
-                        btn.setBackgroundResource(R.drawable.button_play);
-                        mediaPlayer.stop();
-                        mediaPlayer.reset();
+                        intialStageRecommended = true;
+                        playingRecommended = false;
+                        btnPlayRecommended.setBackgroundResource(R.drawable.button_play);
+                        mediaPlayerRecommended.stop();
+                        mediaPlayerRecommended.reset();
                     }
                 });
-                mediaPlayer.prepare();
+                mediaPlayerRecommended.prepare();
                 prepared = true;
             } catch (IllegalArgumentException e) {
                 // TODO Auto-generated catch block
@@ -120,12 +153,83 @@ public class RecommendationResultActivity extends Activity {
                 progress.cancel();
             }
             Log.d("Prepared", "//" + result);
-            mediaPlayer.start();
+            mediaPlayerRecommended.start();
 
-            intialStage = false;
+            intialStageRecommended = false;
         }
 
-        public Player() {
+        public PlayerRecommended() {
+            progress = new ProgressDialog(RecommendationResultActivity.this);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+            this.progress.setMessage("Buffering...");
+            this.progress.show();
+
+        }
+    }
+
+    class PlayerRequested extends AsyncTask<String, Void, Boolean> {
+        private ProgressDialog progress;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            Boolean prepared;
+            try {
+
+                mediaPlayerRequested.setDataSource(params[0]);
+
+                mediaPlayerRequested.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        intialStageRequested = true;
+                        playingRequested = false;
+                        btnPlayRequested.setBackgroundResource(R.drawable.button_play);
+                        mediaPlayerRequested.stop();
+                        mediaPlayerRequested.reset();
+                    }
+                });
+                mediaPlayerRequested.prepare();
+                prepared = true;
+            } catch (IllegalArgumentException e) {
+                // TODO Auto-generated catch block
+                Log.d("IllegarArgument", e.getMessage());
+                prepared = false;
+                e.printStackTrace();
+            } catch (SecurityException e) {
+                // TODO Auto-generated catch block
+                prepared = false;
+                e.printStackTrace();
+            } catch (IllegalStateException e) {
+                // TODO Auto-generated catch block
+                prepared = false;
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                prepared = false;
+                e.printStackTrace();
+            }
+            return prepared;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+            if (progress.isShowing()) {
+                progress.cancel();
+            }
+            Log.d("Prepared", "//" + result);
+            mediaPlayerRequested.start();
+
+            intialStageRequested = false;
+        }
+
+        public PlayerRequested() {
             progress = new ProgressDialog(RecommendationResultActivity.this);
         }
 
@@ -143,10 +247,15 @@ public class RecommendationResultActivity extends Activity {
     protected void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
-        if (mediaPlayer != null) {
-            mediaPlayer.reset();
-            mediaPlayer.release();
-            mediaPlayer = null;
+        if (mediaPlayerRecommended != null) {
+            mediaPlayerRecommended.reset();
+            mediaPlayerRecommended.release();
+            mediaPlayerRecommended = null;
+        }
+        if (mediaPlayerRequested != null) {
+            mediaPlayerRequested.reset();
+            mediaPlayerRequested.release();
+            mediaPlayerRequested = null;
         }
     }
 

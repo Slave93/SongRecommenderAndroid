@@ -10,11 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.slavko.retrofit.com.example.slavko.retrofit.model.Track;
+import com.example.slavko.retrofit.com.example.slavko.retrofit.model.Recommendation;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,17 +24,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String url = "http://10.0.3.2:9090/";
+    private static String server_address = "http://192.168.0.105:4000";
     private static final String TAG = MainActivity.class.getCanonicalName();
 
     @Bind(R.id.input_song_name)
-    EditText songName;
+    EditText inpSongName;
+    @Bind(R.id.input_server_address)
+    EditText inpServerAddress;
     @Bind(R.id.btn_recommend)
     Button recommendButton;
     ProgressDialog progressDialog;
 
-    public static Track searchedTrack;
-    public static Track recommendedTrack;
+    public static Recommendation recommendation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,9 +54,19 @@ public class MainActivity extends AppCompatActivity {
                 recommend();
             }
         });
+
+        inpServerAddress.setText(server_address);
+
+        inpSongName.clearFocus();
     }
 
     public void recommend() {
+        if(!inpServerAddress.getText().toString().isEmpty()){
+            server_address = inpServerAddress.getText().toString();
+        }else{
+            inpServerAddress.setText(server_address);
+        }
+
 
         if (!validate()) {
             return;
@@ -66,44 +74,46 @@ public class MainActivity extends AppCompatActivity {
 
         progressDialog.show();
 
-        performRecommendation(songName.getText().toString());
+        performRecommendation(inpSongName.getText().toString());
 
     }
 
     public void performRecommendation(String songName){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(server_address)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         SongRecomenderApi service = retrofit.create(SongRecomenderApi.class);
 
-        Call<List<Track>> call = service.getTrackByName(songName);
-        call.enqueue(new Callback<List<Track>>() {
+        Call<Recommendation> call = service.getTrackByName(songName);
+        call.enqueue(new Callback<Recommendation>() {
             @Override
-            public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {
-                List<Track> trackList = response.body();
-                if (trackList==null || trackList.isEmpty()) {
-                    onRecommendationFailed("Couldn't find simillar song!");
-                }else {
-                    onRecommendationSuccess(trackList.get(0));
+            public void onResponse(Call<Recommendation> call, Response<Recommendation> response) {
+                recommendation = response.body();
+                if (recommendation==null) {
+                    onRecommendationFailed("Server did not respond. Please try again later.");
+                }else if(recommendation.getSuccess()) {
+                    onRecommendationSuccess(recommendation);
+                }else{
+                    onRecommendationFailed(recommendation.getMessage());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Track>> call, Throwable throwable) {
-                throwable.printStackTrace();
-                onRecommendationFailed("Couldn't perform recommendation!");
+            public void onFailure(Call<Recommendation> call, Throwable t) {
+                t.printStackTrace();
+                onRecommendationFailed("Couldn't perform recommendation. Please try again later.");
             }
+
+
         });
     }
 
-    public void onRecommendationSuccess(Track track) {
+    public void onRecommendationSuccess(Recommendation recommendation) {
         progressDialog.dismiss();
-        searchedTrack = track;
-        recommendedTrack = track;
-        Log.d(TAG,"found song:" + track.getName());
+        Log.i(TAG,recommendation.toString());
         Intent i = new Intent(this, RecommendationResultActivity.class);
         startActivity(i);
         //Toast.makeText(getBaseContext(), "Recommendation success! Track popularity: "+track.getPopularity(), Toast.LENGTH_SHORT).show();
@@ -117,13 +127,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String songName = this.songName.getText().toString();
+        String songName = this.inpSongName.getText().toString();
 
         if (songName.isEmpty()) {
-            this.songName.setError("enter a song name");
+            this.inpSongName.setError("enter a song name");
             valid = false;
         } else {
-            this.songName.setError(null);
+            this.inpSongName.setError(null);
         }
 
         return valid;
