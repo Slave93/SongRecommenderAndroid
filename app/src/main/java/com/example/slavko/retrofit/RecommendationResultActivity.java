@@ -2,16 +2,25 @@ package com.example.slavko.retrofit;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ReceiverCallNotAllowedException;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.view.View.*;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.slavko.retrofit.com.example.slavko.retrofit.model.Artist;
+import com.example.slavko.retrofit.com.example.slavko.retrofit.model.Recommendation;
+import com.example.slavko.retrofit.com.example.slavko.retrofit.model.Track;
 
 import java.io.IOException;
+import java.util.List;
 
 public class RecommendationResultActivity extends Activity {
 
@@ -44,6 +53,79 @@ public class RecommendationResultActivity extends Activity {
         mediaPlayerRequested.setAudioStreamType(AudioManager.STREAM_MUSIC);
         btnPlayRequested.setBackgroundResource(R.drawable.button_play);
         btnPlayRequested.setOnClickListener(pausePlayRequested);
+
+        Recommendation recommendation = MainActivity.recommendation;
+
+
+        Track requestedSong = recommendation.getRequest_song();
+        List<Artist> requestedSongArtists = requestedSong.getArtists();
+
+        String requestedSongAristsString = "";
+        String requestedSongGenres = "";
+
+        for(Artist artist: requestedSongArtists){
+            requestedSongAristsString+=artist.getName()+", ";
+
+            for(String genre : artist.getGenres()){
+                requestedSongGenres+=genre+", ";
+            }
+        }
+
+        if(!requestedSongAristsString.isEmpty()){
+            requestedSongAristsString = requestedSongAristsString.substring(0,requestedSongAristsString.length()-2);
+        }else{
+            requestedSongAristsString="This song has no attached artists";
+        }
+        if(!requestedSongGenres.isEmpty()){
+            requestedSongGenres = requestedSongGenres.substring(0,requestedSongGenres.length()-2);
+        }else{
+            requestedSongGenres="This song has no attached genres";
+        }
+
+
+        Track recommendedSong = recommendation.getSuggested_song();
+        List<Artist> recommendedSongArtists = recommendedSong.getArtists();
+
+        String recommendedSongArtistsString = "";
+        String recommendedSongGenres = "";
+
+        for(Artist artist: recommendedSongArtists){
+            recommendedSongArtistsString+=artist.getName()+", ";
+            for(String genre : artist.getGenres()){
+                recommendedSongGenres+=genre+", ";
+            }
+        }
+
+        if(!recommendedSongArtistsString.isEmpty()){
+            recommendedSongArtistsString = recommendedSongArtistsString.substring(0,recommendedSongArtistsString.length()-2);
+        }else{
+            recommendedSongArtistsString = "This song has no attached artists";
+        }
+
+        if(!recommendedSongGenres.isEmpty()){
+            recommendedSongGenres = recommendedSongGenres.substring(0,recommendedSongGenres.length()-2);
+        }else{
+            recommendedSongGenres = "This song has no attached genres";
+        }
+
+        TextView textViewRSName = (TextView)findViewById(R.id.textViewRSName);
+        textViewRSName.setText(textViewRSName.getText() + requestedSong.getName());
+
+        TextView textViewRSArists = (TextView)findViewById(R.id.textViewRSArtist);
+        textViewRSArists.setText(textViewRSArists.getText() + requestedSongAristsString);
+
+        TextView textViewRSGenres = (TextView)findViewById(R.id.textViewRSGenres);
+        textViewRSGenres.setText(textViewRSGenres.getText() + requestedSongGenres);
+
+
+        TextView textViewRMSName = (TextView)findViewById(R.id.textViewRMSName);
+        textViewRMSName.setText(textViewRMSName.getText() + recommendedSong.getName());
+
+        TextView textViewRMSArtists = (TextView)findViewById(R.id.textViewRMSArtists);
+        textViewRMSArtists.setText(textViewRMSArtists.getText() + recommendedSongArtistsString);
+
+        TextView textViewRMSGenres = (TextView)findViewById(R.id.textViewRMSGenres);
+        textViewRMSGenres.setText(textViewRMSGenres.getText() + recommendedSongGenres);
 
 
 
@@ -257,6 +339,21 @@ public class RecommendationResultActivity extends Activity {
             mediaPlayerRequested.release();
             mediaPlayerRequested = null;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mediaPlayerRecommended != null) {
+            mediaPlayerRecommended.reset();
+            mediaPlayerRecommended.release();
+            mediaPlayerRecommended = null;
+        }
+        if (mediaPlayerRequested != null) {
+            mediaPlayerRequested.reset();
+            mediaPlayerRequested.release();
+            mediaPlayerRequested = null;
+        }
+        super.onDestroy();
     }
 
 }

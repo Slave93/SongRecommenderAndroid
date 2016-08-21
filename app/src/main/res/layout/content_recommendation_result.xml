@@ -14,20 +14,22 @@
     >
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="130dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/buttonPreviewRecommended"
-        android:layout_centerVertical="true"
+
+
+        android:layout_below="@+id/textViewRMSGenres"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="130dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/buttonPreviewRequested"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/textViewRSGenres"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,10 +37,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Requested song"
         android:id="@+id/textViewRequestedSong"
-        android:layout_above="@+id/buttonPreviewRequested"
-        android:layout_alignRight="@+id/buttonPreviewRequested"
-        android:layout_alignEnd="@+id/buttonPreviewRequested"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,10 +48,75 @@
         android:text="Recommended song"
         android:id="@+id/textViewRecommendSong"
         android:textAlignment="center"
-        android:layout_above="@+id/buttonPreviewRecommended"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/textViewRequestedSong"
-        android:layout_alignLeft="@+id/buttonPreviewRecommended"
-        android:layout_alignStart="@+id/buttonPreviewRecommended" />
+        android:paddingTop="0dp"
+        android:layout_below="@+id/buttonPreviewRequested"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Song name: "
+        android:id="@+id/textViewRSName"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textViewRequestedSong"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Artists: "
+        android:id="@+id/textViewRSArtist"
+        android:layout_below="@+id/textViewRSName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Genres: "
+        android:id="@+id/textViewRSGenres"
+        android:layout_below="@+id/textViewRSArtist"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Genres: "
+        android:id="@+id/textViewRMSGenres"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/textViewRMSArtists"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Artists: "
+        android:id="@+id/textViewRMSArtists"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/textViewRMSName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Song name: "
+        android:id="@+id/textViewRMSName"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/textViewRecommendSong"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

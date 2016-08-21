@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="SearchTrack">Show Popularity</string>
     <string name="title_activity_recommendation_result">RecommendationResultActivity</string>
+    <string name="title_activity_preferences">PreferencesActivity</string>
+    <string name="settings_summary">Summary</string>
 </resources>

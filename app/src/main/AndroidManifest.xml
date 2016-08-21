@@ -13,8 +13,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Dark"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,10 +24,12 @@
         <activity
             android:name=".RecommendationResultActivity"
             android:label="@string/title_activity_recommendation_result"
-            android:theme="@style/AppTheme.Dark"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dark"></activity>
+        <activity
+            android:name=".RecommenderPreferencesActivity"
+            android:label="@string/title_activity_preferences"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

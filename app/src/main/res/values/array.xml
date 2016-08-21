@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listArrayClusteringAlgorithms">
+        <item>KMeans</item>
+    </string-array>
+
+    <string-array name="listValuesClusteringAlgorithms">
+        <item>1</item>
+    </string-array>
+
+    <string-array name="listArrayRecommendingCriteria">
+        <item>Genre</item>
+        <item>Year span</item>
+    </string-array>
+
+    <string-array name="listValuesRecommendingCriteria">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>

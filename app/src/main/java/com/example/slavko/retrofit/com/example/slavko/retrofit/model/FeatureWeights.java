@@ -1,81 +1,70 @@
 package com.example.slavko.retrofit.com.example.slavko.retrofit.model;
 
 /**
- * Created by igor on 5/8/16.
+ * Created by igor on 7/3/16.
  */
-public class Features {
+public class FeatureWeights {
 
     protected Integer year;
-    protected Float danceability;
-    protected Float energy;
+    protected Integer danceability;
+    protected Integer energy;
     protected Integer track_key;
-    protected Float loudness;
+    protected Integer loudness;
     protected Integer mode;
-    protected Float speechiness;
-    protected Float acousticness;
-    protected Float instrumentalness;
-    protected Float liveness;
-    protected Float valence;
-    protected Float tempo;
+    protected Integer speechiness;
+    protected Integer acousticness;
+    protected Integer instrumentalness;
+    protected Integer liveness;
+    protected Integer valence;
+    protected Integer tempo;
     protected Integer time_signature;
-    protected Float popularity;
+    protected Integer popularity;
 
-    public Features() {
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public Float getAcousticness() {
+    public Integer getAcousticness() {
         return acousticness;
     }
 
-    public void setAcousticness(Float acousticness) {
+    public void setAcousticness(Integer acousticness) {
         this.acousticness = acousticness;
     }
 
-    public Float getDanceability() {
+    public Integer getDanceability() {
         return danceability;
     }
 
-    public void setDanceability(Float danceability) {
+    public void setDanceability(Integer danceability) {
         this.danceability = danceability;
     }
 
-    public Float getEnergy() {
+    public Integer getEnergy() {
         return energy;
     }
 
-    public void setEnergy(Float energy) {
+    public void setEnergy(Integer energy) {
         this.energy = energy;
     }
 
-    public Float getInstrumentalness() {
+    public Integer getInstrumentalness() {
         return instrumentalness;
     }
 
-    public void setInstrumentalness(Float instrumentalness) {
+    public void setInstrumentalness(Integer instrumentalness) {
         this.instrumentalness = instrumentalness;
     }
 
-    public Float getLiveness() {
+    public Integer getLiveness() {
         return liveness;
     }
 
-    public void setLiveness(Float liveness) {
+    public void setLiveness(Integer liveness) {
         this.liveness = liveness;
     }
 
-    public Float getLoudness() {
+    public Integer getLoudness() {
         return loudness;
     }
 
-    public void setLoudness(Float loudness) {
+    public void setLoudness(Integer loudness) {
         this.loudness = loudness;
     }
 
@@ -87,27 +76,27 @@ public class Features {
         this.mode = mode;
     }
 
-    public Float getPopularity() {
+    public Integer getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(Float popularity) {
+    public void setPopularity(Integer popularity) {
         this.popularity = popularity;
     }
 
-    public Float getSpeechiness() {
+    public Integer getSpeechiness() {
         return speechiness;
     }
 
-    public void setSpeechiness(Float speechiness) {
+    public void setSpeechiness(Integer speechiness) {
         this.speechiness = speechiness;
     }
 
-    public Float getTempo() {
+    public Integer getTempo() {
         return tempo;
     }
 
-    public void setTempo(Float tempo) {
+    public void setTempo(Integer tempo) {
         this.tempo = tempo;
     }
 
@@ -127,17 +116,25 @@ public class Features {
         this.track_key = track_key;
     }
 
-    public Float getValence() {
+    public Integer getValence() {
         return valence;
     }
 
-    public void setValence(Float valence) {
+    public void setValence(Integer valence) {
         this.valence = valence;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     @Override
     public String toString() {
-        return "Features{" +
+        return "FeatureWeights{" +
                 "acousticness=" + acousticness +
                 ", year=" + year +
                 ", danceability=" + danceability +

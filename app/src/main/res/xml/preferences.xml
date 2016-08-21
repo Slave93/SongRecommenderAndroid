@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Credentials">
+        <EditTextPreference
+            android:key="username"
+            android:summary="Please provide your username"
+            android:title="Username"></EditTextPreference>
+        <EditTextPreference
+            android:inputType="textPassword"
+            android:key="password"
+            android:summary="Please provide your passwrod"
+            android:title="Password"></EditTextPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Recommendation settings">
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/listArrayRecommendingCriteria"
+        android:entryValues="@array/listValuesRecommendingCriteria"
+        android:key="reccomendationCriteria"
+        android:summary="Select the criteria for recommendation"
+        android:title="Recommendation criteria" />
+
+    <PreferenceScreen android:title="Feature weights">
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="100"
+            android:dialogMessage=""
+            android:key="yearWeight"
+            android:max="100"
+            android:summary="Importance of the year when the song is published when looking for a similar song"
+            android:text="%"
+            android:title="Year weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="0"
+            android:dialogMessage=""
+            android:key="timeSignatureWeight"
+            android:max="100"
+            android:summary="Importance of the song time signature when looking for a similar song"
+            android:text="%"
+            android:title="Time signature weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="80"
+            android:dialogMessage=""
+            android:key="tempoWeight"
+            android:max="100"
+            android:summary="Importance of the song tempo when looking for a similar song"
+            android:text="%"
+            android:title="Tempo weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="100"
+            android:dialogMessage=""
+            android:key="valenceWeight"
+            android:max="100"
+            android:summary="Importance of the mood that the song carries when looking for a similar song"
+            android:text="%"
+            android:title="Valence weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="20"
+            android:dialogMessage=""
+            android:key="livenessWeight"
+            android:max="100"
+            android:summary="Importance of the fact that the track represents live performance when looking for a similar song"
+            android:text="%"
+            android:title="Liveness weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="30"
+            android:dialogMessage=""
+            android:key="instrumentalnessWeight"
+            android:max="100"
+            android:summary="Importance of the song instrumentalness when looking for a similar song"
+            android:text="%"
+            android:title="Instrumentalness weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="70"
+            android:dialogMessage=""
+            android:key="acousticnessWeight"
+            android:max="100"
+            android:summary="Importance of the song acousticness when looking for a similar song"
+            android:text="%"
+            android:title="Acousticness weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="60"
+            android:dialogMessage=""
+            android:key="speechinessWeight"
+            android:max="100"
+            android:summary="Importance of word occurrences in the song when looking for a similar song"
+            android:text="%"
+            android:title="Speechiness weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="50"
+            android:dialogMessage=""
+            android:key="modeWeight"
+            android:max="100"
+            android:summary="Importance of song mode feature when looking for a similar song"
+            android:text="%"
+            android:title="Mode weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="0"
+            android:dialogMessage=""
+            android:key="loudnessWeight"
+            android:max="100"
+            android:summary="Importance of the song loudness when looking for a similar song"
+            android:text="%"
+            android:title="Loudness weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="0"
+            android:dialogMessage=""
+            android:key="trackKeyWeight"
+            android:max="100"
+            android:summary="Importance of track key when looking for a similar song"
+            android:text="%"
+            android:title="Track key weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="60"
+            android:dialogMessage=""
+            android:key="energyWeight"
+            android:max="100"
+            android:summary="Importance of energy that the song carries when looking for a similar song"
+            android:text="%"
+            android:title="Energy weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="80"
+            android:dialogMessage=""
+            android:key="danceabilityWeight"
+            android:max="100"
+            android:summary="Importance of the fact that the song is suitable for dancing when looking for a similar song"
+            android:text="%"
+            android:title="Danceability weight"  />
+        <com.example.slavko.retrofit.SeekBarPreference
+            android:defaultValue="30"
+            android:dialogMessage=""
+            android:key="popularityWeight"
+            android:max="100"
+            android:summary="Importance of the song popularity when looking for a similar song"
+            android:text="%"
+            android:title="Popularity weight"  />
+    </PreferenceScreen>
+</PreferenceCategory>
+
+
+    <PreferenceCategory android:title="Other options">
+        <EditTextPreference
+            android:key="serverAddress"
+            android:summary="Please provide IntelligenceApp remote server address"
+            android:title="Server address"></EditTextPreference>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="applicationUpdates"
+            android:summary="This option if selected will allow the application to check for latest versions."
+            android:title="Application Updates" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/listArrayClusteringAlgorithms"
+            android:entryValues="@array/listValuesClusteringAlgorithms"
+            android:key="clusteringAlgorithm"
+            android:summary="Select the algoritam that you want server to use when preforms clustering"
+            android:title="Clustering algorithm" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
